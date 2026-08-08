@@ -130,10 +130,9 @@ Open [http://localhost:3000](http://localhost:3000)
 The Popper dashboard provides a real-time, completely transparent view of the adversarial process. 
 *(Drop screenshots here before final submission!)*
 
-- **Claim Integrity Report**: `![Trust Density Report](docs/trust-density-report.png)`
-- **Real-time Execution Trace**: `![Execution Trace](docs/execution-trace.png)`
-- **Agent Cost & Budget Ledger**: `![Cost Ledger](docs/cost-ledger.png)`
-- **Provenance Chain Visualization**: `![Hypothesis Provenance](docs/hypothesis-provenance.png)`
+- **Claim Integrity Report**: ![Trust Density Report](docs/trust-density-report.png)
+- **Real-time Execution Trace**: ![Execution Trace](docs/execution-trace.png)
+- **Agent Cost & Budget Ledger**: ![Cost Ledger](docs/cost-ledger.png)
 
 ---
 

@@ -158,7 +158,7 @@ export function ClaimIntegrityReport({ run, claims, hypotheses, auditSummary }: 
                 ))}
               </div>
             )}
-            </div>
+          </div>
           </div>
         );
       })}
