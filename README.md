@@ -10,6 +10,11 @@ Popper is an adversarial multi-agent system that extracts factual claims from ac
 
 ## Architecture
 
+![Popper Architecture Diagram](https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgICAlJSBTdHlsaW5nCiAgICBjbGFzc0RlZiBkZWZhdWx0IGZpbGw6I2Y4ZjlmYSxzdHJva2U6I2U1ZTdlYixzdHJva2Utd2lkdGg6MnB4LGNvbG9yOiMzNzQxNTEKICAgIGNsYXNzRGVmIGFnZW50IGZpbGw6IzA2QTM1RCxzdHJva2U6IzA0N2I0NixzdHJva2Utd2lkdGg6MnB4LGNvbG9yOiNmZmZmZmYsZm9udC13ZWlnaHQ6Ym9sZAogICAgY2xhc3NEZWYgZGIgZmlsbDojMGYxNzJhLHN0cm9rZTojMzM0MTU1LHN0cm9rZS13aWR0aDoycHgsY29sb3I6I2ZmZmZmZixmb250LXdlaWdodDpib2xkCiAgICBjbGFzc0RlZiBmYWlsIGZpbGw6I0Q2NDEzNixzdHJva2U6Izk5MWIxYixzdHJva2Utd2lkdGg6MnB4LGNvbG9yOiNmZmZmZmYKICAgIGNsYXNzRGVmIHdhcm4gZmlsbDojRTBCNTM4LHN0cm9rZTojYjQ1MzA5LHN0cm9rZS13aWR0aDoycHgsY29sb3I6I2ZmZmZmZgoKICAgIERvY1tQYXBlciBJbmdlc3Rpb25dIC0tPiBFeHRyYWN0b3JbRXh0cmFjdG9yIEFnZW50XTo6OmFnZW50CiAgICBFeHRyYWN0b3IgLS0+fEV4dHJhY3RzIENsYWltc3wgREJbKFBvc3RncmVzIENsYWltIEdyYXBoKV06OjpkYgogICAgCiAgICBEQiAtLi0+fFBvbGxzIFBlbmRpbmd8IFZlcmlmaWVyW1ZlcmlmaWVyIEFnZW50XTo6OmFnZW50CiAgICBWZXJpZmllciAtLT58UXVlcmllcyBDcm9zc1JlZi9TZW1hbnRpYyBTY2hvbGFyfCBTb3VyY2VzWyhFeHRlcm5hbCBBUElzKV0KICAgIFZlcmlmaWVyIC0tPnxGYWxzaWZpY2F0aW9uIEF0dGVtcHR8IFZlcmRpY3R7VmVyZGljdH0KICAgIAogICAgVmVyZGljdCAtLT58VmFsaWRhdGVkfCBDb25maXJtZWRbQ29uZmlybWVkXQogICAgVmVyZGljdCAtLT58UmVmdXRlZHwgQ29udHJhZGljdGVkW0NvbnRyYWRpY3RlZF06OjpmYWlsCiAgICBWZXJkaWN0IC0tPnxObyBFdmlkZW5jZXwgVW52ZXJpZmlhYmxlW1VudmVyaWZpYWJsZV06Ojp3YXJuCiAgICAKICAgIENvbmZpcm1lZCAtLT4gREIKICAgIENvbnRyYWRpY3RlZCAtLT4gREIKICAgIFVudmVyaWZpYWJsZSAtLT4gREIKICAgIAogICAgREIgLS4tPnxQb2xscyBDb25maXJtZWQgT05MWXwgU3ludGhlc2lzW1N5bnRoZXNpcyBBZ2VudF06OjphZ2VudAogICAgU3ludGhlc2lzIC0tPiBIeXBvdGhlc2VzW05vdmVsIFJlc2VhcmNoIEh5cG90aGVzZXNdCiAgICAKICAgIERCIC0uLT4gQXVkaXRbQXVkaXQgQWdlbnRdOjo6YWdlbnQKICAgIEF1ZGl0IC0tPiBSZXBvcnRbQ2xhaW0gSW50ZWdyaXR5IFJlcG9ydF0K)
+
+<details>
+<summary>View Architecture Source (Mermaid)</summary>
+
 ```mermaid
 flowchart TD
     %% Styling
@@ -40,6 +45,7 @@ flowchart TD
     DB -.-> Audit[Audit Agent]:::agent
     Audit --> Report[Claim Integrity Report]
 ```
+</details>
 
 - **Extractor Agent** — `openai/gpt-oss-20b:free` — extracts citation-backed claims → writes to `claims` table
 - **Verifier Agent** — `openai/gpt-oss-20b:free` — adversarial falsification, one LLM call per claim
@@ -133,6 +139,7 @@ The Popper dashboard provides a real-time, completely transparent view of the ad
 - **Claim Integrity Report**: ![Trust Density Report](docs/trust-density-report.png)
 - **Real-time Execution Trace**: ![Execution Trace](docs/execution-trace.png)
 - **Agent Cost & Budget Ledger**: ![Cost Ledger](docs/cost-ledger.png)
+- **Live Demo Recording**: ![Demo Run](docs/demo-run.gif)
 
 ---
 
