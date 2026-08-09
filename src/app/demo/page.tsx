@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   IconArrowRight,
@@ -14,8 +14,20 @@ import Image from 'next/image';
 export default function DemoPage() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setLoadingStep((s) => Math.min(s + 1, 5));
+      }, 1500);
+      return () => clearInterval(interval);
+    } else {
+      setLoadingStep(0);
+    }
+  }, [loading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,70 +79,112 @@ export default function DemoPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <input
-            id="paper-url-input"
-            type="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://arxiv.org/abs/2401.12345"
-            required
-            disabled={loading}
+        {loading ? (
+          <div
             style={{
-              width: '100%',
-              padding: '16px 20px',
-              fontSize: 16,
-              border: '1px solid var(--line)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '40px 24px',
               borderRadius: 'var(--radius-btn)',
-              outline: 'none',
-              fontFamily: 'var(--font-body)',
-              background: '#fff',
-              color: 'var(--ink)',
-              transition: 'border-color 0.2s, box-shadow 0.2s',
+              border: '1px solid var(--green)',
+              background: 'rgba(14, 183, 112, 0.04)',
+              textAlign: 'center',
+              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             }}
-            onFocus={(e) => {
-              e.target.style.borderColor = 'var(--green)';
-              e.target.style.boxShadow = '0 0 0 4px rgba(14,183,112,0.12)';
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = 'var(--line)';
-              e.target.style.boxShadow = 'none';
-            }}
-          />
-
-          {error && (
-            <p
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                color: 'var(--contradicted)',
-                fontSize: 14,
-                margin: 0,
-              }}
-            >
-              <IconWarning size={16} /> {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading || !url.trim()}
-            id="submit-verification-btn"
-            className="button button-round w-full"
-            style={{ opacity: loading ? 0.7 : 1 }}
           >
-            {loading ? (
-              <>
-                <IconClock size={16} /> Starting verification…
-              </>
-            ) : (
-              <>
-                Start verification <IconArrowRight size={16} />
-              </>
+            <div style={{ position: 'relative', width: 48, height: 48, marginBottom: 24 }}>
+              <div style={{ position: 'absolute', inset: 0, border: '3px solid var(--green)', borderRadius: '50%', opacity: 0.2 }}></div>
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  border: '3px solid transparent',
+                  borderTopColor: 'var(--green)',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                }}
+              ></div>
+              <style>{`
+                @keyframes spin { to { transform: rotate(360deg); } }
+                @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+              `}</style>
+            </div>
+            <h3 style={{ fontSize: 18, fontWeight: 600, color: 'var(--ink)', marginBottom: 8, fontFamily: 'var(--font-display)' }}>
+              Analyzing arXiv:{url.match(/arxiv\.org\/(?:abs|pdf)\/([0-9.]+)/)?.[1] || 'Paper'}
+            </h3>
+            <p style={{ color: 'var(--ink-muted)', fontSize: 15, margin: 0, minHeight: 24, transition: 'opacity 0.3s ease' }}>
+              {
+                [
+                  "Connecting to arXiv...",
+                  "Fetching paper metadata...",
+                  "Initializing Extractor Agent...",
+                  "Parsing text & extracting claims...",
+                  "Booting Verifier Agent...",
+                  "Preparing Claim Graph...",
+                ][loadingStep]
+              }
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <input
+              id="paper-url-input"
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://arxiv.org/abs/2401.12345"
+              required
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '16px 20px',
+                fontSize: 16,
+                border: '1px solid var(--line)',
+                borderRadius: 'var(--radius-btn)',
+                outline: 'none',
+                fontFamily: 'var(--font-body)',
+                background: '#fff',
+                color: 'var(--ink)',
+                transition: 'border-color 0.2s, box-shadow 0.2s',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = 'var(--green)';
+                e.target.style.boxShadow = '0 0 0 4px rgba(14,183,112,0.12)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'var(--line)';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+
+            {error && (
+              <p
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  color: 'var(--contradicted)',
+                  fontSize: 14,
+                  margin: 0,
+                }}
+              >
+                <IconWarning size={16} /> {error}
+              </p>
             )}
-          </button>
-        </form>
+
+            <button
+              type="submit"
+              disabled={loading || !url.trim()}
+              id="submit-verification-btn"
+              className="button button-round w-full"
+              style={{ opacity: loading ? 0.7 : 1 }}
+            >
+              Start verification <IconArrowRight size={16} />
+            </button>
+          </form>
+        )}
 
         <div
           className="flex justify-center flex-wrap"
