@@ -1,0 +1,196 @@
+[
+  {
+    "id": "eval-001",
+    "claim_text": "Jumper et al. (2021) reported that AlphaFold predicts protein structures with atomic-level accuracy, often competitive with experimental structures.",
+    "source_sentence": "AlphaFold demonstrated that a neural network can predict protein three-dimensional structure with atomic accuracy even where no similar structure is known (Jumper et al., 2021).",
+    "cited_source_raw": "Jumper, J. et al. Highly accurate protein structure prediction with AlphaFold. Nature, 2021.",
+    "expected_status": "confirmed",
+    "notes": "Real Nature paper (DOI 10.1038/s41586-021-03819-2); abstract explicitly states atomic accuracy."
+  },
+  {
+    "id": "eval-002",
+    "claim_text": "Jinek et al. (2012) showed that Cas9 is a programmable, dual-RNA-guided DNA endonuclease that can be directed to cut specific DNA sites.",
+    "source_sentence": "The demonstration that Cas9 could be programmed with a single guide RNA established the basis for CRISPR genome editing (Jinek et al., 2012).",
+    "cited_source_raw": "Jinek, M. et al. A Programmable Dual-RNA-Guided DNA Endonuclease in Adaptive Bacterial Immunity. Science, 2012.",
+    "expected_status": "confirmed",
+    "notes": "Real Science paper (DOI 10.1126/science.1225829); abstract supports the programmable endonuclease claim."
+  },
+  {
+    "id": "eval-003",
+    "claim_text": "Abbott et al. (2016) reported the first direct observation of gravitational waves from a binary black hole merger.",
+    "source_sentence": "The LIGO detection confirmed a century-old prediction of general relativity (Abbott et al., 2016).",
+    "cited_source_raw": "Abbott, B. P. et al. Observation of Gravitational Waves from a Binary Black Hole Merger. Physical Review Letters, 2016.",
+    "expected_status": "confirmed",
+    "notes": "Real PRL paper (DOI 10.1103/PhysRevLett.116.061102); abstract states first direct detection."
+  },
+  {
+    "id": "eval-004",
+    "claim_text": "Takahashi and Yamanaka (2006) demonstrated that adult fibroblasts can be reprogrammed into induced pluripotent stem cells by four defined factors.",
+    "source_sentence": "Induced pluripotency was first achieved by introducing four transcription factors into mouse fibroblasts (Takahashi and Yamanaka, 2006).",
+    "cited_source_raw": "Takahashi, K. and Yamanaka, S. Induction of Pluripotent Stem Cells from Mouse Embryonic and Adult Fibroblast Cultures by Defined Factors. Cell, 2006.",
+    "expected_status": "confirmed",
+    "notes": "Real Cell paper (DOI 10.1016/j.cell.2006.07.024); abstract supports reprogramming of adult fibroblasts."
+  },
+  {
+    "id": "eval-005",
+    "claim_text": "Polack et al. (2020) reported roughly 95% efficacy for the BNT162b2 mRNA COVID-19 vaccine in a phase 3 trial.",
+    "source_sentence": "The pivotal trial found the mRNA vaccine was 95% effective in preventing symptomatic COVID-19 (Polack et al., 2020).",
+    "cited_source_raw": "Polack, F. P. et al. Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine. New England Journal of Medicine, 2020.",
+    "expected_status": "confirmed",
+    "notes": "Real NEJM paper (DOI 10.1056/NEJMoa2034577); abstract states 95% efficacy."
+  },
+  {
+    "id": "eval-006",
+    "claim_text": "Barabasi and Albert (1999) showed that many real-world networks have a scale-free, power-law degree distribution arising from preferential attachment.",
+    "source_sentence": "Scale-free structure was proposed as a common organizing principle of complex networks (Barabasi and Albert, 1999).",
+    "cited_source_raw": "Barabasi, A.-L. and Albert, R. Emergence of Scaling in Random Networks. Science, 1999.",
+    "expected_status": "confirmed",
+    "notes": "Real Science paper (DOI 10.1126/science.286.5439.509); abstract supports scale-free/power-law finding."
+  },
+  {
+    "id": "eval-007",
+    "claim_text": "Deng et al. (2009) introduced ImageNet, a large-scale hierarchical image database organized according to the WordNet hierarchy.",
+    "source_sentence": "ImageNet provided the large annotated dataset that later enabled deep learning breakthroughs in vision (Deng et al., 2009).",
+    "cited_source_raw": "Deng, J. et al. ImageNet: A Large-Scale Hierarchical Image Database. CVPR, 2009.",
+    "expected_status": "confirmed",
+    "notes": "Real CVPR paper (DOI 10.1109/CVPR.2009.5206848); abstract describes the ImageNet database."
+  },
+  {
+    "id": "eval-008",
+    "claim_text": "Hochreiter and Schmidhuber (1997) introduced Long Short-Term Memory (LSTM) to address the vanishing gradient problem in recurrent networks.",
+    "source_sentence": "LSTM units use gating to preserve gradient information over long sequences (Hochreiter and Schmidhuber, 1997).",
+    "cited_source_raw": "Hochreiter, S. and Schmidhuber, J. Long Short-Term Memory. Neural Computation, 1997.",
+    "expected_status": "confirmed",
+    "notes": "Real Neural Computation paper (DOI 10.1162/neco.1997.9.8.1735); abstract supports LSTM/vanishing-gradient claim."
+  },
+
+  {
+    "id": "eval-009",
+    "claim_text": "The Transformer architecture was first introduced by Devlin et al. (2018) in the BERT paper.",
+    "source_sentence": "Self-attention as the sole sequence-transduction mechanism was first proposed in the BERT paper (Devlin et al., 2018).",
+    "cited_source_raw": "Devlin, J. et al. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. 2018.",
+    "expected_status": "contradicted",
+    "notes": "Misattribution: BERT uses Transformers but did not introduce them (Vaswani et al., 2017 did). The cited source is BERT, not the Transformer paper."
+  },
+  {
+    "id": "eval-010",
+    "claim_text": "Jumper et al. (2021) concluded that AlphaFold cannot predict protein structures more accurately than traditional homology modeling.",
+    "source_sentence": "The AlphaFold authors reported their method did not improve on homology modeling (Jumper et al., 2021).",
+    "cited_source_raw": "Jumper, J. et al. Highly accurate protein structure prediction with AlphaFold. Nature, 2021.",
+    "expected_status": "contradicted",
+    "notes": "Wrong finding: the cited paper reports atomic-accuracy predictions, the opposite of this claim."
+  },
+  {
+    "id": "eval-011",
+    "claim_text": "Jinek et al. (2015) were the first to describe Cas9 as a programmable dual-RNA-guided DNA endonuclease.",
+    "source_sentence": "The programmable nature of Cas9 was first reported in 2015 (Jinek et al., 2015).",
+    "cited_source_raw": "Jinek, M. et al. A Programmable Dual-RNA-Guided DNA Endonuclease in Adaptive Bacterial Immunity. Science, 2012.",
+    "expected_status": "contradicted",
+    "notes": "Wrong year: the cited landmark paper is 2012, not 2015."
+  },
+  {
+    "id": "eval-012",
+    "claim_text": "Polack et al. (2020) reported that the BNT162b2 mRNA COVID-19 vaccine was only 62% effective against symptomatic disease.",
+    "source_sentence": "The phase 3 trial found 62% efficacy for the mRNA vaccine (Polack et al., 2020).",
+    "cited_source_raw": "Polack, F. P. et al. Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine. New England Journal of Medicine, 2020.",
+    "expected_status": "contradicted",
+    "notes": "Wrong number: reported efficacy was ~95%, not 62%."
+  },
+  {
+    "id": "eval-013",
+    "claim_text": "Barabasi and Albert (1999) demonstrated that most real-world networks follow a Poisson (Erdos-Renyi random) degree distribution.",
+    "source_sentence": "Real networks were shown to be well described by classical random-graph (Poisson) degree distributions (Barabasi and Albert, 1999).",
+    "cited_source_raw": "Barabasi, A.-L. and Albert, R. Emergence of Scaling in Random Networks. Science, 1999.",
+    "expected_status": "contradicted",
+    "notes": "Wrong finding: the paper argues for scale-free/power-law, explicitly contrasting with Poisson random graphs."
+  },
+  {
+    "id": "eval-014",
+    "claim_text": "ImageNet was introduced by Krizhevsky et al. (2012) as part of the AlexNet paper.",
+    "source_sentence": "The ImageNet dataset was first released alongside AlexNet (Krizhevsky et al., 2012).",
+    "cited_source_raw": "Deng, J. et al. ImageNet: A Large-Scale Hierarchical Image Database. CVPR, 2009.",
+    "expected_status": "contradicted",
+    "notes": "Misattribution: the cited source (Deng et al., 2009) is the actual ImageNet paper; the claim credits the wrong authors/year."
+  },
+  {
+    "id": "eval-015",
+    "claim_text": "Abbott et al. (2016) reported that LIGO found no statistically significant evidence of gravitational waves.",
+    "source_sentence": "The 2016 LIGO analysis reported a null result for gravitational waves (Abbott et al., 2016).",
+    "cited_source_raw": "Abbott, B. P. et al. Observation of Gravitational Waves from a Binary Black Hole Merger. Physical Review Letters, 2016.",
+    "expected_status": "contradicted",
+    "notes": "Wrong finding: the cited paper reports the FIRST direct detection, not a null result."
+  },
+  {
+    "id": "eval-016",
+    "claim_text": "Hochreiter and Schmidhuber (1997) concluded that recurrent networks with sigmoidal units do not suffer from vanishing or exploding gradients.",
+    "source_sentence": "The LSTM paper argued that standard RNNs already handle long-range dependencies without gradient decay (Hochreiter and Schmidhuber, 1997).",
+    "cited_source_raw": "Hochreiter, S. and Schmidhuber, J. Long Short-Term Memory. Neural Computation, 1997.",
+    "expected_status": "contradicted",
+    "notes": "Wrong finding: the paper is motivated precisely by the vanishing-gradient problem that LSTM is designed to solve."
+  },
+
+  {
+    "id": "eval-017",
+    "claim_text": "A recent internal study found a 12 ms end-to-end latency improvement in the serving system.",
+    "source_sentence": "Our serving stack improved end-to-end latency by 12 ms in a recent internal study.",
+    "cited_source_raw": null,
+    "expected_status": "unverifiable",
+    "notes": "No citation provided; nothing to resolve against."
+  },
+  {
+    "id": "eval-018",
+    "claim_text": "Smith et al. (2023) reported a 3.4% accuracy gain on an internal benchmark.",
+    "source_sentence": "Prior work reported a 3.4% gain on the benchmark (Smith et al., 2023).",
+    "cited_source_raw": "Smith et al., 2023.",
+    "expected_status": "unverifiable",
+    "notes": "Citation far too generic to resolve to a specific DOI; internal benchmark not public."
+  },
+  {
+    "id": "eval-019",
+    "claim_text": "According to a 2022 personal communication, the method scales linearly with the number of nodes.",
+    "source_sentence": "The approach scales linearly with cluster size (personal communication, 2022).",
+    "cited_source_raw": "Personal communication, 2022.",
+    "expected_status": "unverifiable",
+    "notes": "Personal communication is inherently unverifiable — no retrievable source."
+  },
+  {
+    "id": "eval-020",
+    "claim_text": "An internal technical report documented a 2x throughput speedup over the previous system.",
+    "source_sentence": "Throughput doubled relative to the prior release (Acme Labs Technical Report TR-2021-07).",
+    "cited_source_raw": "Acme Labs Technical Report TR-2021-07, 2021.",
+    "expected_status": "unverifiable",
+    "notes": "Unpublished internal technical report; not indexed, cannot be retrieved."
+  },
+  {
+    "id": "eval-021",
+    "claim_text": "Prior work has shown that transformer models are robust to moderate input token corruption.",
+    "source_sentence": "Transformers have been shown to tolerate moderate input corruption (prior work).",
+    "cited_source_raw": "prior work",
+    "expected_status": "unverifiable",
+    "notes": "Vague hand-wave citation with no author, title, or year to resolve."
+  },
+  {
+    "id": "eval-022",
+    "claim_text": "Doe (2019) established in an unpublished PhD thesis that the regret bound is tight.",
+    "source_sentence": "The bound was shown to be tight (Doe, PhD thesis, 2019).",
+    "cited_source_raw": "Doe, J. PhD thesis, University of Somewhere, 2019 (unpublished).",
+    "expected_status": "unverifiable",
+    "notes": "Unpublished thesis; typically not resolvable via CrossRef/Semantic Scholar."
+  },
+  {
+    "id": "eval-023",
+    "claim_text": "Nguyen and Patel (2020) measured a 7% reduction in data-center energy use from their scheduler.",
+    "source_sentence": "A 7% reduction in energy use was reported for the proposed scheduler (Nguyen and Patel, 2020).",
+    "cited_source_raw": "Nguyen, T. and Patel, R. Journal of Obscure Systems Studies, 2020.",
+    "expected_status": "unverifiable",
+    "notes": "Obscure/likely non-indexed venue; citation should fail to resolve to a checkable source."
+  },
+  {
+    "id": "eval-024",
+    "claim_text": "A forthcoming 2024 paper will prove the proposed algorithm is asymptotically optimal.",
+    "source_sentence": "We will prove asymptotic optimality in forthcoming work (2024).",
+    "cited_source_raw": "Forthcoming, 2024.",
+    "expected_status": "unverifiable",
+    "notes": "Forthcoming/unpublished; no source exists yet to verify against."
+  }
+]

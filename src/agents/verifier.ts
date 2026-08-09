@@ -24,6 +24,14 @@ import { batchFetchByDois, checkSourceAgreement } from '@/lib/external/semantics
 import { z } from 'zod';
 import type { VerifierVerdict, Claim } from '@/types';
 
+// Gentle pacing between per-claim LLM calls to stay under free-tier rate limits
+// (HTTP 429). callLlm already retries transient 429s with backoff; pacing here
+// reduces how often that path is exercised on multi-claim runs. Override with
+// VERIFIER_INTER_CLAIM_MS (set 0 to disable).
+const VERIFIER_INTER_CLAIM_MS = Number(process.env.VERIFIER_INTER_CLAIM_MS ?? 1500);
+const verifierSleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
 // Schema for JUST the fields the Verifier LLM returns. claim_id and
 // cited_source_doi are supplied by our own code (not the model), so they are
 // merged in after validation. Evidence fields are lenient (optional/nullable)
@@ -309,5 +317,11 @@ export async function runVerifier(params: {
         reason: verdict.status_reason,
       });
     }
+
+    // Pace before the next claim to stay under free-tier rate limits (429).
+    if (VERIFIER_INTER_CLAIM_MS > 0) {
+      await verifierSleep(VERIFIER_INTER_CLAIM_MS);
+    }
   }
 }
+

@@ -72,6 +72,11 @@ export interface LlmCallParams<T = unknown> {
     exclude?: boolean;
     enabled?: boolean;
   };
+  /**
+   * Internal retry counter (1-based). Do NOT set at call sites — callLlm manages
+   * it itself when retrying transient provider failures (429/5xx) with backoff.
+   */
+  _attempt?: number;
 }
 
 
@@ -108,6 +113,18 @@ export class LlmCallError extends Error {
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY;
+
+/**
+ * Transient provider failures are RETRYABLE. The free tier in particular returns
+ * 429 under bursty load (e.g. verifying 20+ claims back-to-back); without retries
+ * those claims collapse to a false "unverifiable" — an infrastructure artifact,
+ * not a real verdict. Bounded exponential backoff (honoring Retry-After when the
+ * provider sends it) keeps a temporary 429/5xx from poisoning the Claim Graph.
+ * Override the attempt cap with LLM_MAX_ATTEMPTS.
+ */
+const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 529]);
+const LLM_MAX_ATTEMPTS = Math.max(1, Number(process.env.LLM_MAX_ATTEMPTS ?? 3));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Default total-response timeout. Free-tier inference on a shared pool is slower
@@ -269,6 +286,7 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
     temperature = 0.2,
     maxTokens = 2048,
     reasoning,
+    _attempt = 1,
   } = params;
 
   const startTime = Date.now();
@@ -304,7 +322,7 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
     agentRole,
     claimId,
     'dispatched',
-    `Sending request to ${model} (prompt: ${userPrompt.length} chars, timeout ${timeoutMs}ms)`,
+    `Sending request to ${model} (prompt: ${userPrompt.length} chars, timeout ${timeoutMs}ms)${_attempt > 1 ? ` [attempt ${_attempt}/${LLM_MAX_ATTEMPTS}]` : ''}`,
   );
 
   // The guaranteed deadline. Without this, a stalled provider hangs forever.
@@ -342,6 +360,26 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
 
     if (!response.ok) {
       const errorBody = await response.text().catch(() => '');
+
+      // Retry transient failures (rate limit / capacity) with backoff before
+      // giving up — otherwise a momentary 429 becomes a false "unverifiable".
+      if (RETRYABLE_STATUS.has(response.status) && _attempt < LLM_MAX_ATTEMPTS) {
+        const retryAfterS = Number(response.headers.get('retry-after'));
+        const backoffMs =
+          Number.isFinite(retryAfterS) && retryAfterS > 0
+            ? Math.min(30_000, retryAfterS * 1000)
+            : Math.min(15_000, 1_500 * 2 ** (_attempt - 1));
+        await logLlmEvent(
+          runId,
+          agentRole,
+          claimId,
+          'responded',
+          `Transient HTTP ${response.status} — backing off ${backoffMs}ms then retrying (attempt ${_attempt}/${LLM_MAX_ATTEMPTS})`,
+        );
+        await sleep(backoffMs);
+        return callLlm<T>({ ...params, _attempt: _attempt + 1 });
+      }
+
       await logLlmEvent(
         runId,
         agentRole,
@@ -422,6 +460,21 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
       // rate slot on the provider. Count it, or we under-report real usage.
       await logAgentCall(runId, agentRole, claimId, model, 0, 0, latencyMs, true);
       return { success: false, error: 'TIMEOUT', tokensIn: 0, tokensOut: 0, latencyMs };
+    }
+
+    // Network-level error (connection reset/drop). Retry if attempts remain —
+    // these are usually transient too.
+    if (_attempt < LLM_MAX_ATTEMPTS) {
+      const backoffMs = Math.min(15_000, 1_500 * 2 ** (_attempt - 1));
+      await logLlmEvent(
+        runId,
+        agentRole,
+        claimId,
+        'responded',
+        `Network error "${(err instanceof Error ? err.message : String(err)).slice(0, 160)}" — backing off ${backoffMs}ms then retrying (attempt ${_attempt}/${LLM_MAX_ATTEMPTS})`,
+      );
+      await sleep(backoffMs);
+      return callLlm<T>({ ...params, _attempt: _attempt + 1 });
     }
 
     await logLlmEvent(
