@@ -16,7 +16,8 @@ Popper was evaluated against a labeled gold set (`eval/claims.json`) of 24 claim
 
 **Independent Verification Run:**
 To prove the system works on arbitrary real-world papers outside the test set, we ran the pipeline against a recently published paper with complex cross-references (arXiv:2608.05524).
-Run ID: `8c7d19ec-5e27-47d3-8e5f-333639105bf6`
+Run ID: `794c0cd9-25d5-4ed4-a96f-d25d0fcf0398`
+Outcome: 1 Confirmed / 2 Contradicted / 7 Unverifiable
 
 ## Demo Assets
 

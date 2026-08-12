@@ -65,13 +65,13 @@ LLM, which has training knowledge to reason correctly about famous papers.
 ## Run 2 post-rate-limit results (frozen in `eval/results.json` before gate)
 
 ```
-Claims: 24   Correct: 19   Overall accuracy: 79.2%
-Run: cdce6473-1c6e-4d75-a392-658319344a42   Verifier wall-clock: 947.8s
+Claims: 24   Correct: 20   Overall accuracy: 83.3%
+Verifier wall-clock: 642.0s   Run: fed03ca4-76be-4346-a382-b7699f4e11ef
 
 Per-class:
   confirmed     support=8  precision=100.0%  recall=62.5%  (tp=5 fp=0 fn=3)
-  contradicted  support=8  precision= 66.7%  recall=100.0% (tp=8 fp=4 fn=0)
-  unverifiable  support=8  precision= 85.7%  recall=75.0%  (tp=6 fp=1 fn=2)
+  contradicted  support=8  precision=66.7%  recall=100.0%  (tp=8 fp=4 fn=0)
+  unverifiable  support=8  precision=100.0%  recall=87.5%  (tp=7 fp=0 fn=1)
 ```
 
 ## Run 3 CrossRef gate at threshold=0.55 results

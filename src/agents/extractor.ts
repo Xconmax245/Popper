@@ -131,6 +131,7 @@ export async function runExtractor(params: {
     model: MODELS.extractor,
     temperature: 0.1, // Low temp — we want consistent structured output
     maxTokens: 8000,
+    reasoning: { effort: 'low', exclude: true }, // BUG FIX (empty JSON): cap reasoning tokens for gpt-oss-20b
     responseSchema: ExtractorOutputSchema,
     systemPrompt: EXTRACTOR_SYSTEM_PROMPT,
     userPrompt: `Extract a maximum of 10 citation-backed factual claims from the paper text below. The text contains the body followed by the REFERENCES section — use the REFERENCES section to resolve any numbered citations ([n]) into full author-title-year form in cited_source_raw.\n\n${extractorInput}`,
