@@ -228,7 +228,7 @@ VERIFIER_INTER_CLAIM_MS=4000 LLM_MAX_ATTEMPTS=5 npx tsx scripts/eval-verifier.ts
 
 **Impact:** Catches fabricated numbers, wrong attributions, and year mismatches in seconds with full provenance chains — what a careful human reviewer would catch in hours.
 
-**Accuracy:** 79.2% overall on a 24-claim gold set (100% confirmed precision across all runs; 100% contradicted recall pre-gate; contradicted precision improved from 66.7% → 100% with CrossRef gate). The gate is calibrated at threshold 0.20 after analysis of a 0.55 run that correctly blocked junk citations but over-gated real paper citations.
+**Accuracy:** 83.3% overall on a 24-claim gold set (100% confirmed precision; CrossRef gate at 0.20). See [eval/README.md](eval/README.md) for full metrics and the evaluation methodology.
 
 ---
 
