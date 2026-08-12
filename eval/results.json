@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-09T00:59:00.076Z",
-  "run_id": "cdce6473-1c6e-4d75-a392-658319344a42",
+  "generated_at": "2026-08-12T20:52:22.504Z",
+  "run_id": "a39f9685-555f-4fbf-ae6e-cd3daa2ae196",
   "model_verifier": "openai/gpt-oss-20b:free",
-  "verifier_wall_clock_s": 947.8,
+  "verifier_wall_clock_s": 429.5,
   "totals": {
     "total": 24,
-    "correct": 19,
-    "overall_accuracy": 0.7917
+    "correct": 17,
+    "overall_accuracy": 0.7083
   },
   "per_class": {
     "confirmed": {
@@ -18,37 +18,37 @@
       "recall": 0.625
     },
     "contradicted": {
-      "tp": 8,
-      "fp": 4,
-      "fn": 0,
+      "tp": 4,
+      "fp": 0,
+      "fn": 4,
       "support": 8,
-      "precision": 0.6666666666666666,
-      "recall": 1
+      "precision": 1,
+      "recall": 0.5
     },
     "unverifiable": {
-      "tp": 6,
-      "fp": 1,
-      "fn": 2,
+      "tp": 8,
+      "fp": 7,
+      "fn": 0,
       "support": 8,
-      "precision": 0.8571428571428571,
-      "recall": 0.75
+      "precision": 0.5333333333333333,
+      "recall": 1
     }
   },
   "confusion_matrix": {
     "confirmed": {
       "confirmed": 5,
-      "contradicted": 2,
-      "unverifiable": 1
+      "contradicted": 0,
+      "unverifiable": 3
     },
     "contradicted": {
       "confirmed": 0,
-      "contradicted": 8,
-      "unverifiable": 0
+      "contradicted": 4,
+      "unverifiable": 4
     },
     "unverifiable": {
       "confirmed": 0,
-      "contradicted": 2,
-      "unverifiable": 6
+      "contradicted": 0,
+      "unverifiable": 8
     }
   },
   "results": [
@@ -56,11 +56,11 @@
       "id": "eval-001",
       "claim": "Jumper et al. (2021) reported that AlphaFold predicts protein structures with atomic-level accuracy, often competitive with experimental structures.",
       "expected": "confirmed",
-      "predicted": "confirmed",
-      "correct": true,
-      "reason": "The Nature 2021 paper by Jumper et al. reports that AlphaFold achieves atomic accuracy, with 92% of residues within 1 Å RMSD of experimental structures, and states that the predictions are often competitive with experimental structures.",
-      "confidence": 0.85,
-      "resolved_doi": "10.3410/f.740477161.793587439"
+      "predicted": "unverifiable",
+      "correct": false,
+      "reason": "CrossRef match confidence too low (0.41 < 0.55) — titleSim=0.44, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-002",
@@ -68,39 +68,39 @@
       "expected": "confirmed",
       "predicted": "confirmed",
       "correct": true,
-      "reason": "The 2012 Science paper by Jinek et al. explicitly demonstrates that Cas9 is directed to cleave DNA by a dual-RNA system (crRNA + tracrRNA), establishing it as a programmable, dual-RNA-guided DNA endonuclease.",
-      "confidence": 0.95,
+      "reason": "The 2012 Science paper by Jinek et al. demonstrates that Cas9 is directed to specific DNA sites by a dual-RNA system (crRNA and tracrRNA), establishing it as a programmable, dual-RNA-guided DNA endonuclease.",
+      "confidence": 0.92,
       "resolved_doi": "10.1126/science.1225829"
     },
     {
       "id": "eval-003",
       "claim": "Abbott et al. (2016) reported the first direct observation of gravitational waves from a binary black hole merger.",
       "expected": "confirmed",
-      "predicted": "contradicted",
+      "predicted": "unverifiable",
       "correct": false,
-      "reason": "The DOI cited (10.22541/au.161220228.87275329/v1) resolves to a 2021 publication, not the 2016 Physical Review Letters paper that reported the first direct observation of gravitational waves from a binary black hole merger. The pre‑fetched evidence shows the DOI does not correspond to the 2016 paper, indicating a misattribution of the year and source.",
-      "confidence": 0.95,
-      "resolved_doi": "10.22541/au.161220228.87275329/v1"
+      "reason": "CrossRef match confidence too low (0.30 < 0.55) — titleSim=0.50, authorMatch=false, yearMatch=false. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-004",
       "claim": "Takahashi and Yamanaka (2006) demonstrated that adult fibroblasts can be reprogrammed into induced pluripotent stem cells by four defined factors.",
       "expected": "confirmed",
-      "predicted": "unverifiable",
-      "correct": false,
-      "reason": "Verifier call did not return a usable verdict (HTTP 429: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"openai/gpt-oss-20b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Darkbloom\",\"is_byok\":false). Marked unverifiable.",
-      "confidence": null,
+      "predicted": "confirmed",
+      "correct": true,
+      "reason": "The 2006 Cell paper by Takahashi and Yamanaka (DOI:10.1016/j.cell.2006.07.024) reports that introducing four transcription factors (Oct4, Sox2, Klf4, and c-Myc) into mouse adult fibroblasts reprograms them into induced pluripotent stem cells. The paper’s title and content directly support the claim that adult fibroblasts can be reprogrammed into iPSCs by these four defined factors.",
+      "confidence": 0.95,
       "resolved_doi": "10.1016/j.cell.2006.07.024"
     },
     {
       "id": "eval-005",
       "claim": "Polack et al. (2020) reported roughly 95% efficacy for the BNT162b2 mRNA COVID-19 vaccine in a phase 3 trial.",
       "expected": "confirmed",
-      "predicted": "contradicted",
+      "predicted": "unverifiable",
       "correct": false,
-      "reason": "The cited NEJM article (Polack et al., 2021, DOI:10.1056/nejmc2036242) was published in 2021, not 2020. The claim incorrectly attributes the 95% efficacy result to a 2020 publication.",
-      "confidence": 0.95,
-      "resolved_doi": "10.1056/nejmc2036242"
+      "reason": "CrossRef match confidence too low (0.48 < 0.55) — titleSim=0.56, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-006",
@@ -108,7 +108,7 @@
       "expected": "confirmed",
       "predicted": "confirmed",
       "correct": true,
-      "reason": "The abstract of Barabási and Albert (1999) explicitly states that many large networks exhibit a scale‑free power‑law degree distribution and that this property arises from continuous network growth and preferential attachment.",
+      "reason": "The abstract of Barabási and Albert (1999) explicitly states that many large networks exhibit a scale‑free power‑law degree distribution and that this property arises from two mechanisms: continuous network growth and preferential attachment. This directly supports the claim.",
       "confidence": 0.95,
       "resolved_doi": "10.1126/science.286.5439.509"
     },
@@ -118,8 +118,8 @@
       "expected": "confirmed",
       "predicted": "confirmed",
       "correct": true,
-      "reason": "The 2009 CVPR paper by Deng et al. titled \"ImageNet: A Large-Scale Hierarchical Image Database\" explicitly states that ImageNet is a large-scale image database organized according to the WordNet hierarchy, thereby confirming the claim that Deng et al. introduced ImageNet.",
-      "confidence": 0.9,
+      "reason": "The 2009 CVPR paper by Deng et al. (DOI:10.1109/cvpr.2009.5206848) explicitly introduces ImageNet as a large-scale hierarchical image database organized according to the WordNet hierarchy.",
+      "confidence": 0.95,
       "resolved_doi": "10.1109/cvpr.2009.5206848"
     },
     {
@@ -128,7 +128,7 @@
       "expected": "confirmed",
       "predicted": "confirmed",
       "correct": true,
-      "reason": "The 1997 paper by Hochreiter and Schmidhuber explicitly states that LSTM is introduced to address the vanishing gradient problem in recurrent networks.",
+      "reason": "The 1997 paper by Hochreiter and Schmidhuber explicitly states that LSTM is introduced to address the problem of insufficient, decaying error backflow (i.e., the vanishing gradient problem) in recurrent networks.",
       "confidence": 0.95,
       "resolved_doi": "10.1162/neco.1997.9.8.1735"
     },
@@ -136,21 +136,21 @@
       "id": "eval-009",
       "claim": "The Transformer architecture was first introduced by Devlin et al. (2018) in the BERT paper.",
       "expected": "contradicted",
-      "predicted": "contradicted",
-      "correct": true,
-      "reason": "The Transformer architecture was first introduced in Vaswani et al. (2017) \"Attention Is All You Need\", not in Devlin et al. (2018) BERT. BERT applies the Transformer architecture but does not propose it. The claim that the Transformer was first introduced by Devlin et al. is therefore false.",
-      "confidence": 0.95,
-      "resolved_doi": "10.1109/tim.2024.3374300/mm1"
+      "predicted": "unverifiable",
+      "correct": false,
+      "reason": "CrossRef match confidence too low (0.22 < 0.55) — titleSim=0.36, authorMatch=false, yearMatch=false. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-010",
       "claim": "Jumper et al. (2021) concluded that AlphaFold cannot predict protein structures more accurately than traditional homology modeling.",
       "expected": "contradicted",
-      "predicted": "contradicted",
-      "correct": true,
-      "reason": "The 2021 Nature paper by Jumper et al. reports that AlphaFold achieves higher accuracy than traditional homology modeling, contradicting the claim that it cannot predict structures more accurately.",
-      "confidence": 0.95,
-      "resolved_doi": "10.3410/f.740477161.793587439"
+      "predicted": "unverifiable",
+      "correct": false,
+      "reason": "CrossRef match confidence too low (0.41 < 0.55) — titleSim=0.44, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-011",
@@ -158,7 +158,7 @@
       "expected": "contradicted",
       "predicted": "contradicted",
       "correct": true,
-      "reason": "The cited work is Jinek et al. (2012), not 2015. The 2012 Science paper titled \"A Programmable Dual‑RNA‑Guided DNA Endonuclease in Adaptive Bacterial Immunity\" is the first publication describing Cas9 as a programmable dual‑RNA‑guided DNA endonuclease. The claim that Jinek et al. (2015) were the first is therefore incorrect.",
+      "reason": "The cited work is Jinek et al. (2012), not 2015. The Science paper (DOI:10.1126/science.1225829) was published online 28 June 2012 and reports that Cas9 is a programmable dual‑RNA‑guided DNA endonuclease. No 2015 publication by Jinek et al. exists that first reports this; the 2015 reference is incorrect.",
       "confidence": 0.95,
       "resolved_doi": "10.1126/science.1225829"
     },
@@ -166,11 +166,11 @@
       "id": "eval-012",
       "claim": "Polack et al. (2020) reported that the BNT162b2 mRNA COVID-19 vaccine was only 62% effective against symptomatic disease.",
       "expected": "contradicted",
-      "predicted": "contradicted",
-      "correct": true,
-      "reason": "The NEJM paper by Polack et al. (2020) reports overall efficacy of 95.0% (95% CI 90.3–97.6%) against symptomatic COVID‑19, not 62%. The abstract and full text state: ‘The vaccine was 95.0% (95% CI 90.3–97.6%) effective in preventing COVID‑19 disease’ (Polack et al., 2020).",
-      "confidence": 0.95,
-      "resolved_doi": "10.1056/nejmc2036242"
+      "predicted": "unverifiable",
+      "correct": false,
+      "reason": "CrossRef match confidence too low (0.48 < 0.55) — titleSim=0.56, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-013",
@@ -178,7 +178,7 @@
       "expected": "contradicted",
       "predicted": "contradicted",
       "correct": true,
-      "reason": "The 1999 Science paper by Barabási and Albert reports that real networks exhibit a scale‑free power‑law degree distribution, not a Poisson (Erdős–Rényi) distribution. The abstract states: ‘A common property of many large networks is that the vertex connectivities follow a scale‑free power‑law distribution.’ This directly contradicts the claim that most real‑world networks follow a Poisson distribution.",
+      "reason": "The 1999 Science paper by Barabási and Albert reports that real-world networks exhibit a scale‑free power‑law degree distribution, not a Poisson (Erdős–Rényi) distribution. The abstract states: \"A common property of many large networks is that the vertex connectivities follow a scale‑free power‑law distribution.\" This directly contradicts the claim that most real‑world networks follow a Poisson distribution.",
       "confidence": 0.95,
       "resolved_doi": "10.1126/science.286.5439.509"
     },
@@ -188,7 +188,7 @@
       "expected": "contradicted",
       "predicted": "contradicted",
       "correct": true,
-      "reason": "The ImageNet dataset was introduced in 2009 by Deng et al. (\"ImageNet: A Large-Scale Hierarchical Image Database\", CVPR 2009), not by Krizhevsky et al. in 2012. The 2012 AlexNet paper used the ImageNet dataset but did not introduce it.",
+      "reason": "The ImageNet dataset was introduced in 2009 by Deng et al. (2009) in the paper \"ImageNet: A Large-Scale Hierarchical Image Database\" (CVPR 2009). The 2012 AlexNet paper by Krizhevsky et al. used the ImageNet dataset but did not introduce it. Therefore the claim that ImageNet was introduced by Krizhevsky et al. (2012) is false.",
       "confidence": 0.95,
       "resolved_doi": "10.1109/cvpr.2009.5206848"
     },
@@ -196,11 +196,11 @@
       "id": "eval-015",
       "claim": "Abbott et al. (2016) reported that LIGO found no statistically significant evidence of gravitational waves.",
       "expected": "contradicted",
-      "predicted": "contradicted",
-      "correct": true,
-      "reason": "The 2016 LIGO paper by Abbott et al. reports the first detection of gravitational waves, not a null result. The paper’s title, abstract, and main text describe the observation of a binary black hole merger (GW150914) with a signal-to-noise ratio of 24 and a false-alarm probability of 1 in 600,000, indicating a highly significant detection.",
-      "confidence": 0.95,
-      "resolved_doi": "10.22541/au.161220228.87275329/v1"
+      "predicted": "unverifiable",
+      "correct": false,
+      "reason": "CrossRef match confidence too low (0.30 < 0.55) — titleSim=0.50, authorMatch=false, yearMatch=false. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-016",
@@ -208,7 +208,7 @@
       "expected": "contradicted",
       "predicted": "contradicted",
       "correct": true,
-      "reason": "The 1997 LSTM paper explicitly discusses the problem of vanishing gradients in standard recurrent networks with sigmoidal units. The abstract states that learning over extended time intervals is difficult because of \"insufficient, decaying error backflow,\" i.e., vanishing gradients. The paper then proposes LSTM to mitigate this issue. Therefore, the claim that Hochreiter and Schmidhuber concluded that such networks do not suffer from vanishing or exploding gradients is incorrect.",
+      "reason": "The 1997 LSTM paper explicitly states that standard recurrent networks with sigmoidal units suffer from vanishing gradients and that LSTM mitigates this problem. It does not conclude that such networks do not suffer from vanishing or exploding gradients.",
       "confidence": 0.95,
       "resolved_doi": "10.1162/neco.1997.9.8.1735"
     },
@@ -218,7 +218,7 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "No citation or DOI was provided, and the pre-fetched evidence shows that the source could not be resolved and no abstract or full text is available. Without a verifiable source, the claim cannot be confirmed or contradicted.",
+      "reason": "No citation or publication details are provided, and the pre-fetched evidence could not resolve a DOI or locate any abstract. Without a verifiable source, the claim cannot be confirmed or contradicted.",
       "confidence": null,
       "resolved_doi": null
     },
@@ -226,11 +226,11 @@
       "id": "eval-018",
       "claim": "Smith et al. (2023) reported a 3.4% accuracy gain on an internal benchmark.",
       "expected": "unverifiable",
-      "predicted": "contradicted",
-      "correct": false,
-      "reason": "The cited DOI 10.1601/ex.2963 resolves to a publication from 2008, not 2023. Therefore the claim that Smith et al. (2023) reported a 3.4% accuracy gain is misattributed to the wrong year and likely refers to a different work.",
-      "confidence": 0.95,
-      "resolved_doi": "10.1601/ex.2963"
+      "predicted": "unverifiable",
+      "correct": true,
+      "reason": "CrossRef match confidence too low (0.07 < 0.55) — titleSim=0.13, authorMatch=false, yearMatch=false. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-019",
@@ -238,9 +238,9 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "The cited source is a personal communication, which is not a published work and therefore cannot be verified through CrossRef or Semantic Scholar. The provided DOI (10.5771/9781793643643-1) does not resolve to a document containing the claimed statement, and no abstract or full text is available to confirm the linear scaling claim. Consequently, the claim cannot be substantiated or refuted with the available evidence.",
+      "reason": "CrossRef match confidence too low (0.23 < 0.55) — titleSim=0.13, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
       "confidence": null,
-      "resolved_doi": "10.5771/9781793643643-1"
+      "resolved_doi": null
     },
     {
       "id": "eval-020",
@@ -248,9 +248,9 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "The DOI 10.23849/npafctr17 does not resolve to an accessible document, and neither CrossRef nor Semantic Scholar provide an abstract or full text. Without access to the cited technical report, the claim about a 2x throughput speedup cannot be verified.",
+      "reason": "CrossRef match confidence too low (0.30 < 0.55) — titleSim=0.25, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
       "confidence": null,
-      "resolved_doi": "10.23849/npafctr17"
+      "resolved_doi": null
     },
     {
       "id": "eval-021",
@@ -258,9 +258,9 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "The cited DOI (10.7717/peerj-cs.3375/table-9) resolves to a table in PeerJ Computer Science, but no abstract or full text is available to verify whether it discusses transformer robustness to moderate input token corruption. The pre-fetched evidence does not provide any content that supports or contradicts the claim, and the citation is too vague to locate a specific study. Therefore the claim cannot be verified with the available evidence.",
+      "reason": "CrossRef match confidence too low (0.24 < 0.55) — titleSim=0.40, authorMatch=false, yearMatch=false. Not passing unreliable evidence to Verifier.",
       "confidence": null,
-      "resolved_doi": "10.7717/peerj-cs.3375/table-9"
+      "resolved_doi": null
     },
     {
       "id": "eval-022",
@@ -268,19 +268,19 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "The pre-fetched evidence provides only a DOI (10.2307/j.ctv15wxp00.21) with no abstract or full text available, and the citation is marked as unpublished. Without access to the thesis content, it is impossible to verify whether Doe (2019) actually established the regret bound as tight. The source cannot be resolved to a verifiable statement supporting or refuting the claim.",
+      "reason": "CrossRef match confidence too low (0.15 < 0.55) — titleSim=0.00, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
       "confidence": null,
-      "resolved_doi": "10.2307/j.ctv15wxp00.21"
+      "resolved_doi": null
     },
     {
       "id": "eval-023",
       "claim": "Nguyen and Patel (2020) measured a 7% reduction in data-center energy use from their scheduler.",
       "expected": "unverifiable",
-      "predicted": "contradicted",
-      "correct": false,
-      "reason": "The DOI 10.32553/ijmbs.v4i7.1222 resolves to a medical journal article about paraduodenal hernias, not a study on data‑center energy use. The abstract discusses clinical diagnosis and surgery for hernias, with no mention of a scheduler or energy consumption. Therefore the cited source does not support the claim of a 7% energy reduction.",
-      "confidence": 0.95,
-      "resolved_doi": "10.32553/ijmbs.v4i7.1222"
+      "predicted": "unverifiable",
+      "correct": true,
+      "reason": "CrossRef match confidence too low (0.51 < 0.55) — titleSim=0.19, authorMatch=true, yearMatch=true. Not passing unreliable evidence to Verifier.",
+      "confidence": null,
+      "resolved_doi": null
     },
     {
       "id": "eval-024",
@@ -288,9 +288,9 @@
       "expected": "unverifiable",
       "predicted": "unverifiable",
       "correct": true,
-      "reason": "The DOI 10.1016/s0749-0712(23)00113-0 resolves to a 2024 Elsevier article, but neither CrossRef nor Semantic Scholar provide an abstract or full text. Without access to the article’s content, it is impossible to confirm whether the paper contains a proof of asymptotic optimality or not.",
+      "reason": "CrossRef match confidence too low (0.35 < 0.55) — titleSim=0.33, authorMatch=false, yearMatch=true. Not passing unreliable evidence to Verifier.",
       "confidence": null,
-      "resolved_doi": "10.1016/s0749-0712(23)00113-0"
+      "resolved_doi": null
     }
   ]
 }
