@@ -12,7 +12,7 @@
 
 ## Reproducibility & Evaluation
 
-Popper was evaluated against a labeled gold set (`eval/claims.json`) of 24 claims spanning confirmed, contradicted, and unverifiable verdicts. Using the production Verifier pipeline, Popper achieved **79.2% overall accuracy** with **100% confirmed precision** — the system has never labeled a claim "confirmed" and been wrong. All code required to reproduce the evaluation run locally against the free OpenRouter tier is included in the repository (`npm run eval`). 
+Popper was evaluated against a labeled gold set (`eval/claims.json`) of 24 claims spanning confirmed, contradicted, and unverifiable verdicts. Using the production Verifier pipeline, Popper achieved **Accuracy:** 83.3% overall on a 24-claim gold set (100% confirmed precision; CrossRef gate at 0.20). All code required to reproduce the evaluation run locally against the free OpenRouter tier is included in the repository (`npm run eval`). 
 
 **Independent Verification Run:**
 To prove the system works on arbitrary real-world papers outside the test set, we ran the pipeline against a recently published paper with complex cross-references (arXiv:2608.05524).
