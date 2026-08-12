@@ -29,6 +29,19 @@ export default function DemoPage() {
     }
   }, [loading]);
 
+  // C9: Canonical demo paper — self-hosted fixture based on Vaswani et al. 2017.
+  // Contains 1 planted fabrication (LSTM "95% accuracy" claim) + real citations
+  // that naturally produce unverifiable verdicts. Served from our own API route
+  // so the input text is controlled while all pipeline steps remain genuine.
+  const DEMO_PAPER_URL = typeof window !== 'undefined'
+    ? `${window.location.origin}/api/demo/fixture-paper`
+    : '/api/demo/fixture-paper';
+
+  const loadDemoPaper = () => {
+    setUrl(DEMO_PAPER_URL);
+    setError('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!url.trim()) return;
@@ -158,6 +171,34 @@ export default function DemoPage() {
                 e.target.style.boxShadow = 'none';
               }}
             />
+
+            {/* C9: One-click demo paper shortcut */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <button
+                type="button"
+                id="load-demo-paper-btn"
+                onClick={loadDemoPaper}
+                disabled={loading}
+                style={{
+                  padding: '8px 16px',
+                  fontSize: 13,
+                  border: '1px solid var(--green)',
+                  borderRadius: 'var(--radius-btn)',
+                  background: 'rgba(14,183,112,0.06)',
+                  color: 'var(--green)',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                ✦ Try demo paper
+              </button>
+              <span style={{ fontSize: 12, color: 'var(--ink-muted)', lineHeight: 1.4 }}>
+                Pre-loaded with 1 planted fabrication + natural unverifiable claims.
+                Runs the full pipeline on controlled input.
+              </span>
+            </div>
 
             {error && (
               <p
