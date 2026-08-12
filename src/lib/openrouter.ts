@@ -24,9 +24,9 @@ import { MODEL_LIST_PRICES } from '@/types';
 export const MODELS = {
   extractor: process.env.MODEL_EXTRACTOR ?? 'openai/gpt-oss-20b:free',
   verifier: process.env.MODEL_VERIFIER ?? 'openai/gpt-oss-20b:free',
-  synthesis: process.env.MODEL_SYNTHESIS ?? 'nvidia/nemotron-3-ultra:free',
+  synthesis: process.env.MODEL_SYNTHESIS ?? 'openai/gpt-oss-20b:free',
   audit: process.env.MODEL_AUDIT ?? 'openai/gpt-oss-20b:free',
-  fallback: process.env.MODEL_FALLBACK ?? 'poolside/laguna-xs-2.1:free',
+  fallback: process.env.MODEL_FALLBACK ?? 'openai/gpt-oss-20b:free',
 } as const;
 
 

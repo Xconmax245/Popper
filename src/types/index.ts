@@ -153,6 +153,7 @@ export const OpenRouterModel = z.enum([
   'openai/gpt-oss-20b:free',
   'nvidia/nemotron-3-ultra:free',
   'poolside/laguna-xs-2.1:free',
+  'google/gemini-2.0-flash-exp:free',
 ]);
 export type OpenRouterModel = z.infer<typeof OpenRouterModel>;
 
@@ -162,6 +163,7 @@ export const MODEL_LIST_PRICES: Record<string, { input: number; output: number }
   'openai/gpt-oss-20b:free': { input: 0.15, output: 0.60 },
   'nvidia/nemotron-3-ultra:free': { input: 1.00, output: 1.00 },
   'poolside/laguna-xs-2.1:free': { input: 0.10, output: 0.10 },
+  'google/gemini-2.0-flash-exp:free': { input: 0.00, output: 0.00 },
 };
 
 // ============================================================
