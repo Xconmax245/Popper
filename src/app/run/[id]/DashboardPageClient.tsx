@@ -114,10 +114,16 @@ export function DashboardPageClient({
               <span className="font-['Synonym'] font-bold text-lg tracking-tight">Popper</span>
             </a>
             <div className="h-5 w-px bg-[var(--dash-border)]" />
-            <div className="flex items-center gap-2">
-              <span className="text-[14px] font-bold text-[var(--dash-text-muted)]">Dashboard</span>
-              <span className="text-[var(--dash-text-muted)]">/</span>
-              <span className="text-[14px] font-bold text-[var(--dash-text)]">Run #{runId.slice(0, 8)}</span>
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-2">
+                <span className="text-[14px] font-bold text-[var(--dash-text-muted)]">Dashboard</span>
+                <span className="text-[var(--dash-text-muted)]">/</span>
+                <span className="text-[14px] font-bold text-[var(--dash-text)]">Run #{runId.slice(0, 8)}</span>
+              </div>
+              {/* E13: Falsifiability principle visible in-product */}
+              <span className="text-[11px] italic text-[var(--dash-text-muted)] leading-none">
+                Falsifiability enforcement — no claim is usable until it has survived attempted falsification.
+              </span>
             </div>
           </div>
         </header>

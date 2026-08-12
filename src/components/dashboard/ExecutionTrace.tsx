@@ -25,6 +25,7 @@ const FIELD_TONE: Record<string, Tone> = {
   timed_out: 'alarm',
   parse_error: 'alarm',
   budget_halted: 'warn',
+  degraded_single_source: 'warn', // D12: budget-degraded verification renders amber, not gray
   dispatched: 'progress',
   responded: 'progress',
 };
@@ -98,6 +99,37 @@ export function ExecutionTrace({ diffs }: ExecutionTraceProps) {
             second: '2-digit',
           });
 
+          // ── B6: SYNTHESIS REJECTION BADGE ─────────────────────────────────────
+          // Fires BEFORE the isVerdict check so it can never be green-styled.
+          // Visually distinct enough to read as a deliberate system act without narration.
+          if (diff.field_changed === 'claim_rejected' && diff.new_value === 'rejected_by_synthesis') {
+            return (
+              <motion.div
+                key={diff.id}
+                id={`trace-${diff.id}`}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut', delay: i * 0.05 }}
+                className="relative pl-6"
+              >
+                {/* Red timeline dot */}
+                <div className="absolute left-[-1.1rem] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-[var(--dash-red)] bg-[var(--dash-red)]" />
+
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <span className="font-mono text-[11px] text-[var(--dash-text-muted)] whitespace-nowrap">{ts}</span>
+                </div>
+
+                <div className="flex items-start gap-2 rounded-md border border-[var(--dash-red)] bg-[var(--dash-red-soft)] px-3 py-2 mt-1">
+                  <span className="font-bold text-[var(--dash-red)] text-xs tracking-wide uppercase whitespace-nowrap shrink-0 mt-0.5">
+                    ✕ REJECTED BY SYNTHESIS
+                  </span>
+                  <span className="text-sm text-[var(--dash-text-secondary)] leading-relaxed">{diff.reason}</span>
+                </div>
+              </motion.div>
+            );
+          }
+          // ── END SYNTHESIS REJECTION BADGE ─────────────────────────────────────
+
           // Format a nice title
           let title = (diff.field_changed || diff.agent_role).replace(/_/g, ' ');
           title = title.charAt(0).toUpperCase() + title.slice(1);
@@ -108,8 +140,10 @@ export function ExecutionTrace({ diffs }: ExecutionTraceProps) {
           // "Verdict" = the green happy-path treatment. A row only earns it when
           // its tone is otherwise normal, so an error/failed/timed_out row keeps
           // its alarm styling instead of being overridden to green here.
+          // NOTE: claim_rejected is excluded here because rejected_by_synthesis
+          // is handled above; other claim_rejected values (non-synthesis) can
+          // fall through to the normal verdict path.
           const isVerdict = tone === 'normal' && (
-            diff.field_changed === 'claim_rejected' ||
             diff.field_changed === 'hypothesis_accepted' ||
             diff.field_changed === 'run_state'
           );

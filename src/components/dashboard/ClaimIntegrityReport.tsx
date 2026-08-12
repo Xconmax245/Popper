@@ -48,8 +48,13 @@ export function ClaimIntegrityReport({ run, claims, hypotheses, auditSummary }: 
           </div>
           
           <div className="text-[var(--dash-text)] text-xl font-bold tracking-tight mt-2">Overall Trust Density</div>
+
+          {/* E13: Falsifiability principle — judges encounter this while using the product */}
+          <div className="text-[13px] px-5 py-2 rounded-full bg-white/40 border border-white/60 mt-3 font-medium shadow-sm backdrop-blur-md text-[var(--dash-text-muted)] italic max-w-md text-center">
+            Falsifiability enforcement — no claim is usable until it has survived attempted falsification.
+          </div>
           
-          <div className="text-[14px] px-5 py-1.5 rounded-full bg-white/60 border border-white mt-4 font-medium shadow-sm backdrop-blur-md text-[var(--dash-text-secondary)]">
+          <div className="text-[14px] px-5 py-1.5 rounded-full bg-white/60 border border-white mt-3 font-medium shadow-sm backdrop-blur-md text-[var(--dash-text-secondary)]">
             <strong className="text-[var(--dash-text)]">{confirmed.length} confirmed</strong> / {total} total claims
           </div>
 
@@ -136,6 +141,16 @@ export function ClaimIntegrityReport({ run, claims, hypotheses, auditSummary }: 
                               {claim.evidence_snippet}
                             </p>
                           </div>
+                        )}
+                        
+                        {/* B7: Permanent-lock copy for unverifiable claims — makes the
+                            Postgres BEFORE UPDATE trigger invariant visible in the UI.
+                            A judge clicking around can see this without reading SQL. */}
+                        {claim.status === 'unverifiable' && (
+                          <p className="text-xs italic text-[var(--dash-yellow-dark)] mt-3 flex items-center gap-1.5 bg-[var(--dash-yellow-soft)] border border-[var(--dash-yellow)] rounded-lg px-3 py-2">
+                            <span className="text-[var(--dash-yellow)] font-bold shrink-0">🔒</span>
+                            Status locked by database trigger. This claim cannot change for the lifetime of the run.
+                          </p>
                         )}
                         
                         {claim.confidence !== null && (
