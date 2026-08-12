@@ -19,7 +19,8 @@
 import { checkBudget, applyBudgetStatus, MODELS } from '@/lib/openrouter';
 import { callLlm } from '@/lib/llm/call';
 import { createClient } from '@/lib/supabase/server';
-import { resolveCitation, getWorkByDoi, extractAbstract, extractYear } from '@/lib/external/crossref';
+import { resolveCitation, getWorkByDoi, extractAbstract, extractYear, scoreMatch, MATCH_CONFIDENCE_THRESHOLD } from '@/lib/external/crossref';
+import type { MatchConfidence } from '@/lib/external/crossref';
 import { batchFetchByDois, checkSourceAgreement } from '@/lib/external/semanticscholar';
 import { z } from 'zod';
 import type { VerifierVerdict, Claim } from '@/types';
@@ -91,6 +92,8 @@ interface ClaimWithEvidence {
   crossrefUrl: string | null;
   agreementNote: string;
   year: number | null;
+  // Set when the CrossRef match confidence gate fires — skip the LLM call entirely.
+  lowConfidenceGate?: MatchConfidence & { threshold: number };
 }
 
 async function fetchEvidenceForClaim(claim: Claim, ssBatch: Map<string, SemanticScholarPaperType>): Promise<ClaimWithEvidence> {
@@ -104,6 +107,30 @@ async function fetchEvidenceForClaim(claim: Claim, ssBatch: Map<string, Semantic
   if (claim.cited_source_raw) {
     const crWork = await resolveCitation(claim.cited_source_raw);
     if (crWork) {
+      // ── MATCH CONFIDENCE GATE ────────────────────────────────────────────────
+      // Before trusting this DOI, score how well the resolved work actually
+      // matches the raw citation text. If the match is weak (wrong DOI resolved
+      // by CrossRef query ranking), passing it to the Verifier causes the
+      // Verifier to reason correctly — on the wrong evidence. This gate prevents
+      // those false verdicts at the source. 4/5 misses in the baseline eval
+      // traced directly to this problem.
+      const matchConf = scoreMatch(claim.cited_source_raw, crWork);
+      if (matchConf.score < MATCH_CONFIDENCE_THRESHOLD) {
+        // Return early — caller will write the unverifiable verdict without
+        // making any LLM call, saving a request against the daily budget.
+        return {
+          claim,
+          crossrefAbstract: null,
+          ssAbstract: null,
+          resolvedDoi: null,       // do NOT propagate the low-confidence DOI
+          crossrefUrl: null,
+          agreementNote: 'CrossRef match below confidence threshold — DOI suppressed',
+          year: null,
+          lowConfidenceGate: { ...matchConf, threshold: MATCH_CONFIDENCE_THRESHOLD },
+        };
+      }
+      // ── END GATE ─────────────────────────────────────────────────────────────
+
       resolvedDoi = crWork.DOI;
       crossrefAbstract = extractAbstract(crWork);
       crossrefUrl = crWork.URL;
@@ -242,6 +269,38 @@ export async function runVerifier(params: {
 
     // Fetch evidence (TypeScript, no LLM tokens)
     const evidence = await fetchEvidenceForClaim(claim, ssBatch);
+
+    // ── LOW-CONFIDENCE GATE: skip the LLM call entirely ──────────────────────
+    // If CrossRef returned a result but the match confidence was below threshold,
+    // fetchEvidenceForClaim already returned early with lowConfidenceGate set.
+    // Write the verdict directly and move to the next claim.
+    if (evidence.lowConfidenceGate) {
+      const g = evidence.lowConfidenceGate;
+      const gateReason = `CrossRef match confidence too low (${g.score.toFixed(2)} < ${g.threshold}) — titleSim=${g.titleSim.toFixed(2)}, authorMatch=${g.authorMatch}, yearMatch=${g.yearMatch}. Not passing unreliable evidence to Verifier.`;
+
+      await supabase.from('claims').update({
+        status: 'unverifiable',
+        status_reason: gateReason,
+        confidence: null,
+        evidence_url: null,
+        evidence_snippet: null,
+        cited_source_doi: null,
+      }).eq('id', claim.id);
+
+      await supabase.from('state_diffs').insert({
+        run_id: runId,
+        claim_id: claim.id,
+        agent_role: 'verifier',
+        field_changed: 'status',
+        old_value: 'pending',
+        new_value: 'unverifiable',
+        reason: gateReason,
+      });
+
+      if (VERIFIER_INTER_CLAIM_MS > 0) await verifierSleep(VERIFIER_INTER_CLAIM_MS / 2);
+      continue;
+    }
+    // ── END GATE ─────────────────────────────────────────────────────────────
 
     // ONE LLM call per claim — routed through the shared wrapper (guaranteed
     // timeout + dispatched/responded/parsed/failed/timed_out trace events).
