@@ -24,22 +24,35 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const supabase = await createClient();
+  let runCount = 0;
+  let claimCount = 0;
 
-  // Fetch real stats
-  const { count: runCount } = await supabase
-    .from('runs')
-    .select('*', { count: 'exact', head: true })
-    .eq('state', 'done');
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const supabase = await createClient();
 
-  const { count: claimCount } = await supabase
-    .from('claims')
-    .select('*', { count: 'exact', head: true })
-    .eq('status', 'confirmed');
+      // Fetch real stats
+      const { count: rc } = await supabase
+        .from('runs')
+        .select('*', { count: 'exact', head: true })
+        .eq('state', 'done');
+      
+      if (rc !== null) runCount = rc;
+
+      const { count: cc } = await supabase
+        .from('claims')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'confirmed');
+        
+      if (cc !== null) claimCount = cc;
+    } catch (e) {
+      console.warn("Could not fetch stats during build", e);
+    }
+  }
 
   const stats = [
-    { num: `${runCount ?? 0}`, label: 'SUCCESSFUL RUNS' },
-    { num: `${claimCount ?? 0}`, label: 'CLAIMS CONFIRMED' },
+    { num: `${runCount}`, label: 'SUCCESSFUL RUNS' },
+    { num: `${claimCount}`, label: 'CLAIMS CONFIRMED' },
     { num: '0', label: 'UNSOURCED CLAIMS KEPT' },
   ];
 
