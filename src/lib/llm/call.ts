@@ -145,7 +145,7 @@ const PROVIDER_PREFERENCES = {
   sort: 'price',
   max_price: { prompt: 0, completion: 0 },
   allow_fallbacks: true,
-  data_collection: 'deny',
+  data_collection: 'allow',
 } as const;
 
 // ============================================================
@@ -352,13 +352,13 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
       signal: controller.signal,
     });
 
-    clearTimeout(timeoutHandle);
     const latencyMs = Date.now() - startTime;
 
     // 2. RESPONDED — logged regardless of status code; a 4xx/5xx is still signal.
     await logLlmEvent(runId, agentRole, claimId, 'responded', `HTTP ${response.status} after ${latencyMs}ms`);
 
     if (!response.ok) {
+      clearTimeout(timeoutHandle);
       const errorBody = await response.text().catch(() => '');
 
       // Retry transient failures (rate limit / capacity) with backoff before
@@ -399,6 +399,7 @@ export async function callLlm<T = unknown>(params: LlmCallParams<T>): Promise<Ll
     }
 
     const json = await response.json();
+    clearTimeout(timeoutHandle);
     const rawText: string = json?.choices?.[0]?.message?.content ?? '';
     const tokensIn: number = json?.usage?.prompt_tokens ?? 0;
     const tokensOut: number = json?.usage?.completion_tokens ?? 0;

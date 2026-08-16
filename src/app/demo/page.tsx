@@ -7,7 +7,6 @@ import {
   IconArrowLeft,
   IconCheck,
   IconWarning,
-  IconClock,
 } from '@/components/landing/icons';
 import Image from 'next/image';
 
