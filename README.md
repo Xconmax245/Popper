@@ -9,6 +9,7 @@
 
 Popper is an adversarial multi-agent system that extracts factual claims from academic papers, verifies each one against real citation sources (CrossRef + Semantic Scholar), and synthesizes novel research hypotheses **only from what survives verification**. Named after [Karl Popper](https://en.wikipedia.org/wiki/Karl_Popper), the philosopher who argued that science advances through falsification — not confirmation.
 
+🌐 **Live Demo:** [popper-3ei6.vercel.app](https://popper-3ei6.vercel.app/)  
 **actual demo run cost = $0.00 (free-tier)**
 
 ---
@@ -19,7 +20,7 @@ Popper is an adversarial multi-agent system that extracts factual claims from ac
 
 | Step | What to do | What you'll see |
 |------|-----------|-----------------|
-| 1 | Open `/demo` → click **✦ Try demo paper** | Pre-loaded fixture paper (Vaswani et al. 2017, with 1 planted fabrication) |
+| 1 | Open [popper-3ei6.vercel.app/demo](https://popper-3ei6.vercel.app/demo) → click **✦ Try demo paper** | Pre-loaded fixture paper (Vaswani et al. 2017, with 1 planted fabrication) |
 | 2 | Click **Start verification** | Real-time FSM execution: `ingest → extract → verify → synthesize → audit → done` |
 | 3 | Watch the **red flip** 🔴 | The planted fake claim (LSTM "95% accuracy") flips to **Contradicted** with evidence |
 | 4 | Watch the **yellow locks** 🟡 | Naturally unverifiable claims (paywalled/obscure sources) lock permanently — enforced by a Postgres trigger, not app code |
