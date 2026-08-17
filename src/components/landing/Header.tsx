@@ -8,10 +8,10 @@ export function Header() {
     <header className="header" data-aos="fade-down" data-aos-duration="1000">
       <div className="header-inner">
         <div className="nav-left">
-          <a className="nav-link" href="#how">
+          <a className="nav-link" href="https://github.com/Xconmax245/Popper#architecture" target="_blank" rel="noopener noreferrer">
             How it works<span className="beta-tag">Live</span>
           </a>
-          <a className="nav-link nav-hide-mobile" href="#method">Method</a>
+          <a className="nav-link nav-hide-mobile" href="https://github.com/Xconmax245/Popper#200-word-summary" target="_blank" rel="noopener noreferrer">Method</a>
         </div>
 
         <a href="#top" className="brand brand-center" aria-label="Popper home">
@@ -24,7 +24,7 @@ export function Header() {
         <div className="nav-right">
           <a
             className="nav-link nav-hide-mobile"
-            href="https://github.com"
+            href="https://github.com/Xconmax245/Popper"
             target="_blank"
             rel="noopener noreferrer"
           >

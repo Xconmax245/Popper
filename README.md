@@ -6,6 +6,19 @@
 
 Popper is an adversarial multi-agent system that extracts factual claims from academic papers, verifies them against real citation sources (CrossRef + Semantic Scholar), and synthesizes research hypotheses only from what survives verification.
 
+**actual demo run cost = $0.00 (free-tier)**
+
+---
+
+## 🚀 Judge Path (5-Minute Eval)
+
+If you're evaluating this project, here is the fastest way to see the core mechanic:
+1. Go to `/demo` and paste this URL: `http://localhost:3000/api/demo/fixture-paper` (or simply click **✦ Try demo paper**).
+2. Click **Start verification**.
+3. Expect the **red flip** at the planted fake claim (LSTM "95% accuracy").
+4. Expect the **yellow lock** at naturally unverifiable claims (paywalled or obscure).
+5. Expect the **rejection badge** in the execution trace when the Synthesis agent refuses to use the fake claim to generate hypotheses.
+
 ---
 
 ## Verification Accuracy
@@ -171,7 +184,7 @@ Open [http://localhost:3000](http://localhost:3000)
 | Audit | `openai/gpt-oss-20b:free` | Prose summary |
 | Fallback | `poolside/laguna-xs-2.1:free` | All roles (allow_fallbacks) |
 
-**Actual cost: $0.00** (free tier). Cost ledger shows list-price equivalents.
+**actual demo run cost = $0.00 (free-tier)**. Cost ledger shows list-price equivalents.
 
 **Typical run cost:** an 8–10 claim paper runs ~11–13 requests, $0.00 actual spend (OpenRouter free tier), ~$0.011 list-price equivalent if metered.
 
